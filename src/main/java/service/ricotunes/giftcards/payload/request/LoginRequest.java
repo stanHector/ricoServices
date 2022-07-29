@@ -6,17 +6,17 @@ import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
 	@NotBlank
-	private String usernameOrPhone;
+	private String usernameOrEmail;
 
 	@NotBlank
 	private String password;
 
-    public String getUsernameOrPhone() {
-        return usernameOrPhone;
+    public String getUsernameOrEmail() {
+        return usernameOrEmail;
     }
 
-    public void setUsernameOrPhone(String usernameOrPhone) {
-        this.usernameOrPhone = usernameOrPhone;
+    public void setUsernameOrEmail(String usernameOrEmail) {
+        this.usernameOrEmail = usernameOrEmail;
     }
 
     public String getPassword() {

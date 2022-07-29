@@ -21,7 +21,7 @@ import java.util.Objects;
 @ControllerAdvice
 public class RestControllerExceptionHandler {
 
-    public ResponseEntity<ApiResponse> resolveException(RicoException exception) {
+    public ResponseEntity<ApiResponse> resolveException(giftcardException exception) {
         String message = exception.getMessage();
         HttpStatus status = exception.getStatus();
 

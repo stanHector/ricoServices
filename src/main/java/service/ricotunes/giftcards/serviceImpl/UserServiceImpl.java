@@ -61,13 +61,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Users addUser(Users users) {
-//        if (userRepository.existsByUsername(users.getUsername())) {
-//            ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "Username is already taken");
-//            throw new UsernameExistsException(apiResponse);
-//        }
-        if (userRepository.existsByPhone(users.getPhone())) {
-            ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "Phone number is already taken");
-            throw new EmailExistsException(apiResponse);
+        if (userRepository.existsByUsername(users.getUsername())) {
+            ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "Username is already taken");
+            throw new UsernameExistsException(apiResponse);
         }
 
         if (userRepository.existsByEmail(users.getEmail())) {

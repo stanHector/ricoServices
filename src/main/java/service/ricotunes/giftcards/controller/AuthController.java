@@ -1,5 +1,6 @@
 package service.ricotunes.giftcards.controller;
 
+import io.jsonwebtoken.impl.DefaultClaims;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,10 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import service.ricotunes.giftcards.enums.RoleName;
 import service.ricotunes.giftcards.exception.AppException;
 import service.ricotunes.giftcards.model.Role;
@@ -25,6 +23,7 @@ import service.ricotunes.giftcards.repository.UserRepository;
 import service.ricotunes.giftcards.security.JwtTokenProvider;
 import service.ricotunes.giftcards.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,14 +57,31 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<JwtAuthenticationResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsernameOrPhone(), loginRequest.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsernameOrEmail(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtTokenProvider.generateToken(authentication);
-        Users users = userRepository.findByEmail(loginRequest.getUsernameOrPhone());
-//        return ResponseEntity.ok(new JwtAuthenticationResponse("Bearer " + jwt, "Login Successful!", users.getId(), users.getFirstname(), users.getLastname(), users.getPhone(), users.getEmail()));
-        return ResponseEntity.ok(new JwtAuthenticationResponse());
+//        Users users = userRepository.findByEmail(loginRequest.getUsernameOrEmail());
+        return ResponseEntity.ok(new JwtAuthenticationResponse("Bearer " + jwt, "Login Successful!"));
+//        return ResponseEntity.ok(new JwtAuthenticationResponse());
     }
 
+    @GetMapping("/refreshtoken")
+    public ResponseEntity<?> refreshtoken(HttpServletRequest request) {
+        // From the HttpRequest get the claims
+        DefaultClaims claims = (io.jsonwebtoken.impl.DefaultClaims) request.getAttribute("claims");
+
+        Map<String, Object> expectedMap = getMapFromIoJsonwebtokenClaims(claims);
+        String token = jwtTokenProvider.doGenerateRefreshToken(expectedMap, expectedMap.get("sub").toString());
+        return ResponseEntity.ok(new JwtAuthenticationResponse(token));
+    }
+
+    public Map<String, Object> getMapFromIoJsonwebtokenClaims(DefaultClaims claims) {
+        Map<String, Object> expectedMap = new HashMap<>();
+        for (Map.Entry<String, Object> entry : claims.entrySet()) {
+            expectedMap.put(entry.getKey(), entry.getValue());
+        }
+        return expectedMap;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
@@ -78,9 +94,7 @@ public class AuthController {
         if (Boolean.TRUE.equals(userRepository.existsByEmail(signUpRequest.getEmail()))) {
             return new ResponseEntity<>(new ApiResponse(false, "Email address is already taken", HttpStatus.CONFLICT), HttpStatus.OK);
         }
-
 //        String username = signUpRequest.getUsername().toLowerCase();
-
         String firstname = signUpRequest.getFirstname().toLowerCase();
         String lastname = signUpRequest.getLastname().toLowerCase();
         String phone = signUpRequest.getPhone().toLowerCase();
@@ -88,7 +102,7 @@ public class AuthController {
 
         String password = passwordEncoder.encode(signUpRequest.getPassword());
 
-        Users users = new Users( firstname, lastname, phone, email, password);
+        Users users = new Users(firstname, lastname, phone, email, password);
 
         List<Role> roles = new ArrayList<>();
 
@@ -101,15 +115,15 @@ public class AuthController {
         }
         users.setRoles(roles);
 
-        Map<Object, Object> payload = new HashMap<>();
-
-        userService.addUser(users);
-
-        payload.put("payload", users);
+//        Map<Object, Object> payload = new HashMap<>();
+//
+//        userService.addUser(users);
+//
+//        payload.put("payload", users);
 
 //     userRepository.save(users);
-        return new ResponseEntity<>(new ApiResponse(true, "User created successfully", payload, HttpStatus.OK), HttpStatus.OK);
-
-        //   return new ResponseEntity<>(userRepository.save(users), HttpStatus.CREATED);
+//        return new ResponseEntity<>(new ApiResponse(true, "User created successfully", HttpStatus.OK), HttpStatus.OK);
+//
+        return new ResponseEntity<>(userRepository.save(users), HttpStatus.CREATED);
     }
 }

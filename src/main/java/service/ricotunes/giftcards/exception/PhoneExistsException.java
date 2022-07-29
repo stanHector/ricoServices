@@ -1,6 +1,5 @@
 package service.ricotunes.giftcards.exception;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import service.ricotunes.giftcards.payload.response.ApiResponse;

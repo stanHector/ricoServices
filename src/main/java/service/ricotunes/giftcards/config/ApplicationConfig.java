@@ -19,8 +19,9 @@ public class ApplicationConfig {
     public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("https://ricotunes-service.herokuapp.com/api/v1/swagger-ui.html"))
+                .apis(RequestHandlerSelectors.basePackage("http://localhost:8080/api/v1/swagger-ui.html"))
                 .paths(PathSelectors.any())
                 .build();
     }
+
 }
