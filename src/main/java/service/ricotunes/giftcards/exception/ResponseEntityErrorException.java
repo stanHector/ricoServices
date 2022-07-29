@@ -1,5 +1,6 @@
 package service.ricotunes.giftcards.exception;
 
+
 import org.springframework.http.ResponseEntity;
 import service.ricotunes.giftcards.payload.response.ApiResponse;
 

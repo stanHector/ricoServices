@@ -22,7 +22,7 @@ public class Users {
     @Column(name = "id")
     private Long id;
 
-//    @NotBlank
+    @NotBlank
     @Column(name = "username")
     @Size(max = 15)
     private String username;
@@ -70,8 +70,8 @@ public class Users {
     }
 
 
-    public Users( String firstname, String lastname, String phone, String email, String password) {
-//        this.username = username;
+    public Users(String username, String firstname, String lastname, String phone, String email, String password) {
+        this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.phone = phone;

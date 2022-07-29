@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import service.ricotunes.giftcards.model.GiftCard;
 
 @Repository
-public interface GiftCardRepository extends JpaRepository<GiftCard, Long> {
+public interface GiftCardRepository extends JpaRepository<GiftCard,Long>{
 }

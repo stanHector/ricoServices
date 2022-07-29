@@ -4,14 +4,15 @@ package service.ricotunes.giftcards.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "gift_card")
+@Table(name="gift_card")
 public class GiftCard {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private String name;
     private String type;
     private String category;
-    private float amount;
+    private String amount;
 
     public GiftCard() {
     }
@@ -22,6 +23,14 @@ public class GiftCard {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getType() {
@@ -40,11 +49,11 @@ public class GiftCard {
         this.category = category;
     }
 
-    public float getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 }

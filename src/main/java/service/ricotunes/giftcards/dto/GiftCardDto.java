@@ -2,9 +2,10 @@ package service.ricotunes.giftcards.dto;
 
 public class GiftCardDto {
     private long id;
+    private String name;
     private String type;
     private String category;
-    private float amount;
+    private String amount;
 
     public long getId() {
         return id;
@@ -12,6 +13,14 @@ public class GiftCardDto {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getType() {
@@ -30,11 +39,11 @@ public class GiftCardDto {
         this.category = category;
     }
 
-    public float getAmount() {
+    public String getAmount() {
         return amount;
     }
 
-    public void setAmount(float amount) {
+    public void setAmount(String amount) {
         this.amount = amount;
     }
 }

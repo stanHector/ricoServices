@@ -12,7 +12,7 @@ public class JwtAuthenticationResponse<T> {
     public JwtAuthenticationResponse() {
     }
 
-        public JwtAuthenticationResponse(String accessToken, String message){
+        public JwtAuthenticationResponse(String accessToken, String message) {
         this.accessToken = accessToken;
         this.message = message;
 //        this.id = id;
@@ -49,7 +49,7 @@ public class JwtAuthenticationResponse<T> {
 //    public void setId(Long id) {
 //        this.id = id;
 //    }
-
+//
 //    public String getFirstname() {
 //        return firstname;
 //    }
