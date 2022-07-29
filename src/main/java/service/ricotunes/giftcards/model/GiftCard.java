@@ -2,6 +2,7 @@ package service.ricotunes.giftcards.model;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name="gift_card")
@@ -9,9 +10,17 @@ public class GiftCard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @NotBlank
     private String name;
+
+    @NotBlank
     private String type;
+
+    @NotBlank
     private String category;
+
+    @NotBlank
     private String amount;
 
     public GiftCard() {

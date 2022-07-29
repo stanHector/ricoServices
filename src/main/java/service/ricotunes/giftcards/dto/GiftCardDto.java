@@ -1,10 +1,20 @@
 package service.ricotunes.giftcards.dto;
 
+import javax.validation.constraints.NotBlank;
+
 public class GiftCardDto {
     private long id;
+
+    @NotBlank
     private String name;
+
+    @NotBlank
     private String type;
+
+    @NotBlank
     private String category;
+
+    @NotBlank
     private String amount;
 
     public long getId() {

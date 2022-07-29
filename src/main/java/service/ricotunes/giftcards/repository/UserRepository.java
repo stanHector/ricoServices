@@ -23,13 +23,6 @@ public interface UserRepository extends JpaRepository<Users, Long> {
 
 	Optional<Users> findByUsernameOrEmail(String username, String email);
 
-	default Users getUser(UserPrincipal currentUser) {
-		return getUserByName(currentUser.getUsername());
-	}
 
-	default Users getUserByName(String username) {
-		return findByUsername(username)
-				.orElseThrow(() -> new ResourceNotFoundException("Users", "username", username));
-	}
 
 }
