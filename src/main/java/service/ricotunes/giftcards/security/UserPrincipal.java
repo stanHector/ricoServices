@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import service.ricotunes.giftcards.model.Users;
+import service.ricotunes.giftcards.model.User;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -52,12 +52,12 @@ public class UserPrincipal implements UserDetails {
 
     }
 
-    public static UserPrincipal create(Users users) {
-        List<GrantedAuthority> authorities = users.getRoles().stream()
+    public static UserPrincipal create(User user) {
+        List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRoleName().name())).collect(Collectors.toList());
 
-        return new UserPrincipal(users.getId(), users.getFirstname(), users.getLastname(), users.getPhone(),
-                users.getEmail(), users.getPassword(), authorities);
+        return new UserPrincipal(user.getId(), user.getFirstname(), user.getLastname(), user.getPhone(),
+                user.getEmail(), user.getPassword(), authorities);
     }
 
     public Long getId() {

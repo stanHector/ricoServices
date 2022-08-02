@@ -7,7 +7,7 @@ import service.ricotunes.giftcards.exception.AppException;
 import service.ricotunes.giftcards.exception.EmailExistsException;
 import service.ricotunes.giftcards.exception.UsernameExistsException;
 import service.ricotunes.giftcards.model.Role;
-import service.ricotunes.giftcards.model.Users;
+import service.ricotunes.giftcards.model.User;
 import service.ricotunes.giftcards.payload.UserSummary;
 import service.ricotunes.giftcards.payload.response.ApiResponse;
 import service.ricotunes.giftcards.repository.RoleRepository;
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
 //
 //    @Override
 //    public UserProfile getUserProfile(String username) {
-//        Users users = userRepository.getUserByName(username);
+//        User users = userRepository.getUserByName(username);
 //
 //        return new UserProfile(users.getId(), users.getFirstname(), users.getLastname(), users.getPhone(),
 //                users.getEmail()
@@ -59,34 +59,34 @@ public class UserServiceImpl implements UserService {
 //    }
 
     @Override
-    public Users addUser(Users users) {
-        if (userRepository.existsByUsername(users.getUsername())) {
+    public User addUser(User user) {
+        if (userRepository.existsByUsername(user.getUsername())) {
             ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "Username is already taken");
             throw new UsernameExistsException(apiResponse);
         }
 
-        if (userRepository.existsByEmail(users.getEmail())) {
+        if (userRepository.existsByEmail(user.getEmail())) {
             ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "Email is already taken");
             throw new EmailExistsException(apiResponse);
         }
 
         List<Role> roles = new ArrayList<>();
         roles.add(
-                roleRepository.findByRoleName(RoleName.ROLE_USER).orElseThrow(() -> new AppException("Users role not set")));
-        users.setRoles(roles);
+                roleRepository.findByRoleName(RoleName.ROLE_USER).orElseThrow(() -> new AppException("User role not set")));
+        user.setRoles(roles);
 
-        users.setPassword(passwordEncoder.encode(users.getPassword()));
-        return userRepository.save(users);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepository.save(user);
     }
 
 //    @Override
 //    public ApiResponse giveAdmin(String username) {
-//        Users users = userRepository.getUserByName(username);
+//        User users = userRepository.getUserByName(username);
 //        List<Role> roles = new ArrayList<>();
 //        roles.add(roleRepository.findByRoleName(RoleName.ROLE_ADMIN)
-//                .orElseThrow(() -> new AppException("Users role not set")));
+//                .orElseThrow(() -> new AppException("User role not set")));
 //        roles.add(
-//                roleRepository.findByRoleName(RoleName.ROLE_USER).orElseThrow(() -> new AppException("Users role not set")));
+//                roleRepository.findByRoleName(RoleName.ROLE_USER).orElseThrow(() -> new AppException("User role not set")));
 //        users.setRoles(roles);
 //        userRepository.save(users);
 //        return new ApiResponse(Boolean.TRUE, "You gave ADMIN role to users: " + username);
@@ -94,18 +94,18 @@ public class UserServiceImpl implements UserService {
 
 //    @Override
 //    public ApiResponse removeAdmin(String username) {
-//        Users users = userRepository.getUserByName(username);
+//        User users = userRepository.getUserByName(username);
 //        List<Role> roles = new ArrayList<>();
 //        roles.add(
-//                roleRepository.findByRoleName(RoleName.ROLE_USER).orElseThrow(() -> new AppException("Users role not set")));
+//                roleRepository.findByRoleName(RoleName.ROLE_USER).orElseThrow(() -> new AppException("User role not set")));
 //        users.setRoles(roles);
 //        userRepository.save(users);
 //        return new ApiResponse(Boolean.TRUE, "You took ADMIN role from users: " + username);
 //    }
 
 //    @Override
-//    public Users updateUser(Users newUsers, String username, UserPrincipal currentUser) {
-//        Users users = userRepository.getUserByName(username);
+//    public User updateUser(User newUsers, String username, UserPrincipal currentUser) {
+//        User users = userRepository.getUserByName(username);
 //        if (users.getId().equals(currentUser.getId())
 //                || currentUser.getAuthorities().contains(new SimpleGrantedAuthority(RoleName.ROLE_ADMIN.toString()))) {
 ////            users.setUsername(newUsers.getUsername());
@@ -124,8 +124,8 @@ public class UserServiceImpl implements UserService {
 
 //    @Override
 //    public ApiResponse deleteUser(String username, UserPrincipal currentUser) {
-//        Users users = userRepository.findByUsername(username)
-//                .orElseThrow(() -> new ResourceNotFoundException("Users", "id", username));
+//        User users = userRepository.findByUsername(username)
+//                .orElseThrow(() -> new ResourceNotFoundException("User", "id", username));
 //        if (!users.getId().equals(currentUser.getId()) || !currentUser.getAuthorities()
 //                .contains(new SimpleGrantedAuthority(RoleName.ROLE_ADMIN.toString()))) {
 //            ApiResponse apiResponse = new ApiResponse(Boolean.FALSE, "You don't have permission to delete profile of: " + username);

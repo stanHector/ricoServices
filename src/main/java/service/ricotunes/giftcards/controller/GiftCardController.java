@@ -2,11 +2,11 @@ package service.ricotunes.giftcards.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import service.ricotunes.giftcards.dto.GiftCardDto;
 import service.ricotunes.giftcards.exception.ResourceNotFoundException;
 import service.ricotunes.giftcards.model.GiftCard;
-import service.ricotunes.giftcards.model.Users;
 import service.ricotunes.giftcards.repository.GiftCardRepository;
 
 import javax.validation.Valid;
@@ -24,14 +24,15 @@ public class GiftCardController {
         this.giftCardRepository = giftCardRepository;
     }
 
-
     @GetMapping("cards")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     List<GiftCard> getCards() {
         return giftCardRepository.findAll();
     }
 
     //get user by Id
     @GetMapping("card/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GiftCard> getUserById(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         GiftCard giftCard = giftCardRepository.findById(id)
@@ -41,12 +42,14 @@ public class GiftCardController {
 
 
     @PostMapping("card")
+    @PreAuthorize("hasRole('ADMIN')")
     ResponseEntity<GiftCard> createCard(@Valid @RequestBody GiftCard giftCard) {
         return new ResponseEntity<>(giftCardRepository.save(giftCard), HttpStatus.OK);
     }
 
 
     @PutMapping("card/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public GiftCard updateCard(@PathVariable("id") Long id, @Valid @RequestBody GiftCardDto giftCardDto) throws ResourceNotFoundException {
         System.out.println("Update Card with ID = " + id + "...");
         GiftCard giftcard = giftCardRepository.findById(id)
@@ -62,6 +65,7 @@ public class GiftCardController {
 
     //delete user
     @DeleteMapping("card/{id}")
+    @PreAuthorize(" hasRole('ADMIN')")
     public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long id)
             throws ResourceNotFoundException {
         GiftCard giftcard = giftCardRepository.findById(id)

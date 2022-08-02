@@ -13,7 +13,7 @@ public class AppConstants {
 
 	public static final String USERNAME = "username";
 
-	public static final String USER = "Users";
+	public static final String USER = "User";
 
 
 	public static final String YOU_DON_T_HAVE_PERMISSION_TO_MAKE_THIS_OPERATION = "You don't have permission to make this operation";

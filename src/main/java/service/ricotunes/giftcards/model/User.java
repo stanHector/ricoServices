@@ -1,5 +1,6 @@
 package service.ricotunes.giftcards.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.annotations.NaturalId;
 
@@ -14,8 +15,8 @@ import java.util.List;
 @Entity
 @Table(name = "users", uniqueConstraints = {@UniqueConstraint(columnNames = {"phone"}),
         @UniqueConstraint(columnNames = {"email"})})
-public class Users {
-    private static final long serialVersionUID = 1L;
+public class User extends UserDateAudit{
+//    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,6 +57,11 @@ public class Users {
     @Column(name = "password")
     private String password;
 
+//
+//    @JoinColumn(name = "wallet_id")
+//    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+//    private Wallet wallet;
+
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role",
@@ -63,14 +69,14 @@ public class Users {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles;
 
-//    public Users(String username, String phone, String email, String password) {
+//    public User(String username, String phone, String email, String password) {
 //    }
 
-    public Users() {
+    public User() {
     }
 
 
-    public Users(String username, String firstname, String lastname, String phone, String email, String password) {
+    public User(String username, String firstname, String lastname, String phone, String email, String password) {
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -93,9 +99,9 @@ public class Users {
         }
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
+//    public static long getSerialVersionUID() {
+//        return serialVersionUID;
+//    }
 
     public Long getId() {
         return id;
@@ -152,6 +158,14 @@ public class Users {
     public void setUsername(String username) {
         this.username = username;
     }
+
+//    public Wallet getWallet() {
+//        return wallet;
+//    }
+//
+//    public void setWallet(Wallet wallet) {
+//        this.wallet = wallet;
+//    }
 }
 
 

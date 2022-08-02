@@ -14,8 +14,8 @@ public class GiftCardDto {
     @NotBlank
     private String category;
 
-    @NotBlank
-    private String amount;
+//    @NotBlank
+    private double amount;
 
     public long getId() {
         return id;
@@ -49,11 +49,11 @@ public class GiftCardDto {
         this.category = category;
     }
 
-    public String getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(String amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 }
