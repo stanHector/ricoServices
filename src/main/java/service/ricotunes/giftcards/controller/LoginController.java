@@ -86,13 +86,12 @@ public class LoginController {
         }
 
         String username = signUpRequest.getUsername().toLowerCase();
-        String firstname = signUpRequest.getFirstname().toLowerCase();
-        String lastname = signUpRequest.getLastname().toLowerCase();
+        String fullname = signUpRequest.getFullname().toLowerCase();
         String phone = signUpRequest.getPhone().toLowerCase();
         String email = signUpRequest.getEmail().toLowerCase();
         String password = passwordEncoder.encode(signUpRequest.getPassword());
 
-        User user = new User(username, firstname, lastname, phone, email, password);
+        User user = new User(username, fullname, phone, email, password);
 
         List<Role> roles = new ArrayList<>();
 

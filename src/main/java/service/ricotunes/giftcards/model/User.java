@@ -29,14 +29,9 @@ public class User extends UserDateAudit{
     private String username;
 
     @NotBlank
-    @Column(name = "firstname")
+    @Column(name = "fullname")
     @Size(max = 15)
-    private String firstname;
-
-    @NotBlank
-    @Column(name = "lastname")
-    @Size(max = 15)
-    private String lastname;
+    private String fullname;
 
     @NotBlank
     @Column(name = "phone")
@@ -76,10 +71,9 @@ public class User extends UserDateAudit{
     }
 
 
-    public User(String username, String firstname, String lastname, String phone, String email, String password) {
+    public User(String username, String fullname,String phone, String email, String password) {
         this.username = username;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.fullname = fullname;
         this.phone = phone;
         this.email = email;
         this.password = password;
@@ -111,20 +105,12 @@ public class User extends UserDateAudit{
         this.id = id;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getPhone() {

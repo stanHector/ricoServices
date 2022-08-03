@@ -13,14 +13,9 @@ public class SignUpRequest {
 	private String username;
 
     @NotBlank
-    @Column(name = "firstname")
+    @Column(name = "fullname")
     @Size(max = 15)
-    private String firstname;
-
-    @NotBlank
-    @Column(name = "lastname")
-    @Size(max = 15)
-    private String lastname;
+    private String fullname;
 
     @NotBlank
     @Column(name = "phone")
@@ -61,20 +56,12 @@ public class SignUpRequest {
         this.password = password;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getPhone() {

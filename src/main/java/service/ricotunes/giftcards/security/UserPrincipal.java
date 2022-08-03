@@ -18,8 +18,7 @@ public class UserPrincipal implements UserDetails {
     private Long id;
 
     private String username;
-    private String firstname;
-    private String lastname;
+    private String fullname;
     private String phone;
 
     @JsonIgnore
@@ -30,11 +29,10 @@ public class UserPrincipal implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(Long id, String firstname, String lastname, String phone,String email,String password,
+    public UserPrincipal(Long id, String fullname,  String phone,String email,String password,
                          Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.fullname = fullname;
         this.phone = phone;
 //        this.username = username;
         this.email = email;
@@ -56,7 +54,7 @@ public class UserPrincipal implements UserDetails {
         List<GrantedAuthority> authorities = user.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRoleName().name())).collect(Collectors.toList());
 
-        return new UserPrincipal(user.getId(), user.getFirstname(), user.getLastname(), user.getPhone(),
+        return new UserPrincipal(user.getId(), user.getFullname(), user.getPhone(),
                 user.getEmail(), user.getPassword(), authorities);
     }
 
@@ -121,12 +119,12 @@ public class UserPrincipal implements UserDetails {
         return serialVersionUID;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFullname() {
+        return fullname;
     }
 
-    public String getLastname() {
-        return lastname;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getPhone() {

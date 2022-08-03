@@ -61,8 +61,7 @@ public class UserController {
                 .orElseThrow(() -> new ResourceNotFoundException("User not found for this id: " + id));
 
         user.setEmail(userDto.getEmail());
-        user.setFirstname(userDto.getFirstname());
-        user.setLastname(userDto.getLastname());
+        user.setFullname(userDto.getFullname());
         final User updatedUser = userRepository.save(user);
         System.out.println("Updated User " + updatedUser);
         return userRepository.save(updatedUser);

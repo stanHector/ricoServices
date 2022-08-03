@@ -7,10 +7,7 @@ public class UserDto {
     private long id;
 
     @NotBlank
-    private String firstname;
-
-    @NotBlank
-    private String lastname;
+    private String fullname;
 
     @NotBlank
     private String phone;
@@ -32,20 +29,12 @@ public class UserDto {
         this.id = id;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFullname() {
+        return fullname;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
     }
 
     public String getPhone() {
